@@ -1,8 +1,14 @@
 <template>
+	<div v-if="1 == 2">안녕하세요</div>
+	<div v-else-if="1 == 3">안녕하세요2</div>
+	<div v-else>안녕하세요3</div>
+
 	<div class="black-bg" v-if="isModalOpen">
 		<div class="white-bg">
-			<h4>상세페이지</h4>
-			<p>상세페이지 내용</p>
+			<h4>{{ onerooms[clicked].title }}</h4>
+			<img :src="onerooms[clicked].image" alt="" style="width: 100%" />
+			<p>{{ onerooms[clicked].content }}</p>
+			<span>{{ onerooms[clicked].price }} 원</span>
 			<button @click="isModalOpen = false">X</button>
 		</div>
 	</div>
@@ -14,18 +20,25 @@
 		<!-- 변수 작명 2개 가능, 왼쪽변수: 배열 내의 데이터. 오른쪽변수: 1씩 증가하는 정수 -->
 	</div>
 
-	<!-- <div v-for="(i, j) in products" :key="j">
+	<!-- <div v-for="(a, i) in products" :key="i">
 		<img src="./assets/room0.jpg" alt="" class="room-img" />
-		<h4>{{ i }}</h4>
+		<h4>{{ a }}</h4>
 		<p>50 만원</p>
-		<button @click="declaration[j]++">허위매물신고</button
-		><span>declaration: {{ declaration[j] }}</span>
+		<button @click="declaration[i]++">허위매물신고</button
+		><span>declaration: {{ declaration[i] }}</span>
 	</div> -->
 
-	<div v-for="(i, j) in onerooms" :key="j">
-		<img :src="onerooms[j].image" alt="" class="room-img" />
-		<h4 @click="isModalOpen = true">{{ onerooms[j].title }}</h4>
-		<p>{{ onerooms[j].price }} 원</p>
+	<div v-for="(a, i) in onerooms" :key="i">
+		<img :src="a.image" alt="" class="room-img" />
+		<h4
+			@click="
+				isModalOpen = true;
+				clicked = i;
+			"
+		>
+			{{ a.title }}
+		</h4>
+		<p>{{ a.price }} 원</p>
 	</div>
 </template>
 
@@ -36,6 +49,7 @@ export default {
 	name: 'App',
 	data() {
 		return {
+			clicked: 0,
 			onerooms: oneroomsData,
 			isModalOpen: false,
 			declaration: [0, 0, 0],
