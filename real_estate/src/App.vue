@@ -1,7 +1,7 @@
 <template>
-	<div v-if="1 == 2">안녕하세요</div>
+	<!-- <div v-if="1 == 2">안녕하세요</div>
 	<div v-else-if="1 == 3">안녕하세요2</div>
-	<div v-else>안녕하세요3</div>
+	<div v-else>안녕하세요3</div> -->
 
 	<!-- <div class="black-bg" v-if="isModalOpen">
 		<div class="white-bg">
