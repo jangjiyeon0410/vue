@@ -1,15 +1,8 @@
 <template>
-  <div v-for="(a, i) in onerooms" :key="i">
-		<img :src="a.image" alt="" class="room-img" />
-		<h4
-			@click="
-				isModalOpen = true;
-				clicked = i;
-			"
-		>
-			{{ a.title }}
-		</h4>
-		<p>{{ a.price }} 원</p>
+  <div>
+		<img :src="oneroom.image" alt="" class="room-img" />
+		<h4 @click="send">{{ oneroom.title }}</h4>
+		<p>{{ oneroom.price }} 원</p>
 	</div>
 </template>
 
@@ -17,7 +10,12 @@
 export default {
   name: 'CardItem',
   props: {
-    onerooms: Array,
+    oneroom: Object,
+  },
+  methods: {
+    send(){
+      this.$emit('openModal', this.oneroom.id)
+    },
   },
 }
 </script>

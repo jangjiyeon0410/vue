@@ -12,7 +12,7 @@
 			<button @click="isModalOpen = false">X</button>
 		</div>
 	</div> -->
-	<ModalItem :onerooms="onerooms" :clicked="clicked" :isModalOpen="isModalOpen"/>
+	<ModalItem @closeModal="isModalOpen=false" :onerooms="onerooms" :clicked="clicked" :isModalOpen="isModalOpen"/>
 	<!-- <자식: data = 'data'> -->
 
 	<div class="menu">
@@ -48,7 +48,7 @@
 		</h4>
 		<p>{{ a.price }} 원</p>
 	</div> -->
-<CardItem :onerooms="onerooms"/>
+<CardItem @openModal="isModalOpen=true; clicked=$event" :oneroom="onerooms[i]" v-for="(a,i) in onerooms" :key="a"/>
 
 </template>
 
