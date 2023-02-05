@@ -1,35 +1,109 @@
 <template>
-	<img alt="Vue logo" src="./assets/logo.png" />
-	<div>
-		<h4>XX 원룸</h4>
-		<p>{{ price1 }} 만원</p>
+	<div class="black-bg" v-if="isModalOpen">
+		<div class="white-bg">
+			<h4>상세페이지</h4>
+			<p>상세페이지 내용</p>
+			<button @click="isModalOpen = false">X</button>
+		</div>
 	</div>
-	<div>
-		<h4>XX 원룸</h4>
-		<p>{{ price2 }} 만원</p>
+
+	<div class="menu">
+		<!-- <a v-for="작명 in 3" :key="작명">Home</a> -->
+		<a v-for="(a, i) in menus" :key="i">{{ a }}</a>
+		<!-- in 자료형 -> 자료안의 데이터 갯수만큼 반복, a는 순서대로 데이터 안의 자료가 됨 -->
+		<!-- 변수 작명 2개 가능, 왼쪽변수: 배열 내의 데이터. 오른쪽변수: 1씩 증가하는 정수 -->
+	</div>
+
+	<!-- <div v-for="(i, j) in products" :key="j">
+		<img src="./assets/room0.jpg" alt="" class="room-img" />
+		<h4>{{ i }}</h4>
+		<p>50 만원</p>
+		<button @click="declaration[j]++">허위매물신고</button
+		><span>declaration: {{ declaration[j] }}</span>
+	</div> -->
+
+	<div v-for="(i, j) in onerooms" :key="j">
+		<img :src="onerooms[j].image" alt="" class="room-img" />
+		<h4 @click="isModalOpen = true">{{ onerooms[j].title }}</h4>
+		<p>{{ onerooms[j].price }} 원</p>
 	</div>
 </template>
 
 <script>
+import oneroomsData from './assets/oneroom.js';
+
 export default {
 	name: 'App',
 	data() {
 		return {
+			onerooms: oneroomsData,
+			isModalOpen: false,
+			declaration: [0, 0, 0],
+			menus: ['Home', 'Shop', 'About'],
 			price1: 60,
 			price2: 50,
+			style: 'color: red',
+			products: ['역삼동원룸', '천호동원룸', '마포구원룸'],
 		};
+	},
+	methods: {
+		increase() {
+			this.declaration++;
+			// vue에서 함수 만들 때 주의사항** 함수 안에서 데이터 쓸 땐 this.데이터명
+		},
 	},
 	components: {},
 };
 </script>
 
+<!-- 
+	동적인 UI 만드는법:
+	0. ui 디자인(html)
+	1. ui의 현재 상태를 데이터로 저장해둠
+	2. 데이터에 따라 ui가 어떻게 보일지 작성
+ -->
+
 <style>
+body {
+	margin: 0;
+}
+div {
+	box-sizing: border-box;
+}
+.black-bg {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	padding: 20px;
+}
+.white-bg {
+	width: 100%;
+	background: #fff;
+	border-radius: 8px;
+	padding: 20px;
+}
+
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px;
+}
+
+.menu {
+	background: darkslateblue;
+	padding: 15px;
+	border-radius: 5px;
+}
+.menu a {
+	color: white;
+	padding: 10px;
+}
+
+.room-img {
+	width: 100%;
+	margin-top: 40px;
 }
 </style>
