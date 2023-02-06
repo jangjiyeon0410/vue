@@ -12,8 +12,15 @@
 			<button @click="isModalOpen = false">X</button>
 		</div>
 	</div> -->
-	<ModalItem @closeModal="isModalOpen=false" :onerooms="onerooms" :clicked="clicked" :isModalOpen="isModalOpen"/>
-	<!-- <자식: data = 'data'> -->
+
+<!-- 
+	<div class="start" :class="{end: isModalOpen}">
+		<ModalItem @closeModal="isModalOpen=false" :onerooms="onerooms" :clicked="clicked" :isModalOpen="isModalOpen"/>
+	</div> -->
+
+	<transition name="fade">
+		<ModalItem @closeModal="isModalOpen=false" :onerooms="onerooms" :clicked="clicked" :isModalOpen="isModalOpen"/>
+	</transition>
 
 	<div class="menu">
 		<!-- <a v-for="작명 in 3" :key="작명">Home</a> -->
@@ -21,6 +28,13 @@
 		<!-- in 자료형 -> 자료안의 데이터 갯수만큼 반복, a는 순서대로 데이터 안의 자료가 됨 -->
 		<!-- 변수 작명 2개 가능, 왼쪽변수: 배열 내의 데이터. 오른쪽변수: 1씩 증가하는 정수 -->
 	</div>
+
+	<button @click="priceSort">가격순정렬</button>
+	<button @click="sortBack">되돌리기</button>
+	<button @click="alphabetSort">알파벳순정렬</button>
+	<button @click="revertPriceSort">가격역순정렬</button>
+	<button @click="lessThanFifty">50만원이하상품</button>
+
 
 	<!-- <div class="discount">
 		<h4>지금 결제하면 20% 할인</h4>
@@ -63,6 +77,7 @@ export default {
 	data() {
 		return {
 			clicked: 0,
+			originalOnerooms: [...oneroomsData],
 			onerooms: oneroomsData,
 			isModalOpen: false,
 			declaration: [0, 0, 0],
@@ -77,6 +92,40 @@ export default {
 		increase() {
 			this.declaration++;
 			// vue에서 함수 만들 때 주의사항** 함수 안에서 데이터 쓸 땐 this.데이터명
+		},
+		priceSort(){
+			// this.onerooms.sort();	//문자 정렬 
+			// this.onerooms.sort(function(a,b){
+			// 	return a-b	// a,b에 정렬할 넘버 데이터, 리턴값이 음수면 수를 왼쪽으로 보냄 -> 정렬
+			// })
+
+			this.onerooms.sort(function(a,b){
+				return a.price-b.price;
+			})		//sort함수 -> 원본 데이터가 아예 번형됨.
+		},
+		sortBack(){
+			this.onerooms = [...this.originalOnerooms];
+		},
+		alphabetSort(){
+			this.onerooms.sort(function(a,b){
+				if(a.title > b.title) return 1;
+				if(a.title === b.title) return 0;
+				if(a.title < b.title) return -1;
+			})
+		},
+		revertPriceSort(){
+			this.onerooms.sort(function(a,b){
+				return b.price - a.price;
+			})
+		},
+		lessThanFifty(){
+			let underFifty = []
+			for(let i=0; i<this.onerooms.length; i++){
+				if(this.onerooms[i].price < 500000){
+					underFifty.push(this.onerooms[i])
+				}
+			}
+			this.onerooms = underFifty;
 		},
 	},
 	components: {
@@ -108,6 +157,22 @@ div {
 	margin: 10px;
 	border-radius: 5px;
 }
+
+.fade-enter-from{transform: translateY(-1000px);}
+.fade-enter-active{transition: all 1s;}
+.fade-enter-to{transform: translateY(0)}
+
+.fade-leave-from{opacity: 1;}
+.fade-leave-active{transition: all 1s;}
+.fade-leave-to{opacity: 0;}
+
+/* .start{
+	opacity: 0;
+	transition: all 1s;
+}
+.end{
+	opacity: 1;
+} */
 
 .black-bg {
 	width: 100%;
