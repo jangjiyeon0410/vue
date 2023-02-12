@@ -29,17 +29,23 @@ export default {
   },
   watch: {
     month(a){  //a, b 모두 입력된 데이터, a는 변경전 데이터, b는 변경 후 데이터
-      const spaceTab = /\s/g;
       if(a>=13){
-        alert('13 이상 입력하지 마세요.')
-      }else if(isNaN(a) || a.match(spaceTab)){
+        alert('13 이상 입력하지 마세요.');
+      }else if(isNaN(a)){
         {
-          alert('숫자만 입력하세요')
-          this.month = 1
+          alert('숫자만 입력하세요');
+          this.month = 1;
         }
      }
     }
   },
+  beforeUpdate(){
+    if(this.month == 2){
+      alert('2입력');
+      this.month = 3;
+    }
+  },
+  
   props:{
     onerooms: Array,
     clicked: Number,

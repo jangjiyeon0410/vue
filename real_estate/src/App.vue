@@ -39,7 +39,7 @@
 	<!-- <div class="discount">
 		<h4>지금 결제하면 20% 할인</h4>
 	</div> -->
-	<DiscountBanner/>
+	<DiscountBanner v-if="showDiscount == true"/>
 
 	<!-- <div v-for="(a, i) in products" :key="i">
 		<img src="./assets/room0.jpg" alt="" class="room-img" />
@@ -76,6 +76,7 @@ export default {
 	name: 'App',
 	data() {
 		return {
+			showDiscount: true, 
 			clicked: 0,
 			originalOnerooms: [...oneroomsData],
 			onerooms: oneroomsData,
@@ -128,6 +129,20 @@ export default {
 			this.onerooms = underFifty;
 		},
 	},
+
+	created(){
+		//서버에서 데이터 가져오는 코드
+	},
+
+	// mounted(){
+	// 	setTimeout(() => {
+	// 		this.showDiscount = false;
+	// 	}, 2000);
+	// },	// 애로우 평션 쓰면 에러가 안난다는데 왤까?
+
+	
+
+
 	components: {
 		DiscountBanner,
 		ModalItem,
