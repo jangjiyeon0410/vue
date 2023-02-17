@@ -13,13 +13,18 @@
 		</div>
 	</div> -->
 
-<!-- 
+	<!-- 
 	<div class="start" :class="{end: isModalOpen}">
 		<ModalItem @closeModal="isModalOpen=false" :onerooms="onerooms" :clicked="clicked" :isModalOpen="isModalOpen"/>
 	</div> -->
 
 	<transition name="fade">
-		<ModalItem @closeModal="isModalOpen=false" :onerooms="onerooms" :clicked="clicked" :isModalOpen="isModalOpen"/>
+		<ModalItem
+			@closeModal="isModalOpen = false"
+			:onerooms="onerooms"
+			:clicked="clicked"
+			:isModalOpen="isModalOpen"
+		/>
 	</transition>
 
 	<div class="menu">
@@ -35,11 +40,10 @@
 	<button @click="revertPriceSort">가격역순정렬</button>
 	<button @click="lessThanFifty">50만원이하상품</button>
 
-
 	<!-- <div class="discount">
 		<h4>지금 결제하면 20% 할인</h4>
 	</div> -->
-	<DiscountBanner v-if="showDiscount == true"/>
+	<DiscountBanner v-if="showDiscount == true" />
 
 	<!-- <div v-for="(a, i) in products" :key="i">
 		<img src="./assets/room0.jpg" alt="" class="room-img" />
@@ -48,7 +52,6 @@
 		<button @click="declaration[i]++">허위매물신고</button
 		><span>declaration: {{ declaration[i] }}</span>
 	</div> -->
-
 
 	<!-- <div v-for="(a, i) in onerooms" :key="i">
 		<img :src="a.image" alt="" class="room-img" />
@@ -62,8 +65,15 @@
 		</h4>
 		<p>{{ a.price }} 원</p>
 	</div> -->
-<CardItem @openModal="isModalOpen=true; clicked=$event" :oneroom="onerooms[i]" v-for="(a,i) in onerooms" :key="a"/>
-
+	<cardItem
+		@openModal="
+			isModalOpen = true;
+			clicked = $event;
+		"
+		:oneroom="onerooms[i]"
+		v-for="(a, i) in onerooms"
+		:key="a"
+	/>
 </template>
 
 <script>
@@ -76,7 +86,7 @@ export default {
 	name: 'App',
 	data() {
 		return {
-			showDiscount: true, 
+			showDiscount: true,
 			clicked: 0,
 			originalOnerooms: [...oneroomsData],
 			onerooms: oneroomsData,
@@ -94,43 +104,43 @@ export default {
 			this.declaration++;
 			// vue에서 함수 만들 때 주의사항** 함수 안에서 데이터 쓸 땐 this.데이터명
 		},
-		priceSort(){
-			// this.onerooms.sort();	//문자 정렬 
+		priceSort() {
+			// this.onerooms.sort();	//문자 정렬
 			// this.onerooms.sort(function(a,b){
 			// 	return a-b	// a,b에 정렬할 넘버 데이터, 리턴값이 음수면 수를 왼쪽으로 보냄 -> 정렬
 			// })
 
-			this.onerooms.sort(function(a,b){
-				return a.price-b.price;
-			})		//sort함수 -> 원본 데이터가 아예 번형됨.
+			this.onerooms.sort(function (a, b) {
+				return a.price - b.price;
+			}); //sort함수 -> 원본 데이터가 아예 번형됨.
 		},
-		sortBack(){
+		sortBack() {
 			this.onerooms = [...this.originalOnerooms];
 		},
-		alphabetSort(){
-			this.onerooms.sort(function(a,b){
-				if(a.title > b.title) return 1;
-				if(a.title === b.title) return 0;
-				if(a.title < b.title) return -1;
-			})
+		alphabetSort() {
+			this.onerooms.sort(function (a, b) {
+				if (a.title > b.title) return 1;
+				if (a.title === b.title) return 0;
+				if (a.title < b.title) return -1;
+			});
 		},
-		revertPriceSort(){
-			this.onerooms.sort(function(a,b){
+		revertPriceSort() {
+			this.onerooms.sort(function (a, b) {
 				return b.price - a.price;
-			})
+			});
 		},
-		lessThanFifty(){
-			let underFifty = []
-			for(let i=0; i<this.onerooms.length; i++){
-				if(this.onerooms[i].price < 500000){
-					underFifty.push(this.onerooms[i])
+		lessThanFifty() {
+			let underFifty = [];
+			for (let i = 0; i < this.onerooms.length; i++) {
+				if (this.onerooms[i].price < 500000) {
+					underFifty.push(this.onerooms[i]);
 				}
 			}
 			this.onerooms = underFifty;
 		},
 	},
 
-	created(){
+	created() {
 		//서버에서 데이터 가져오는 코드
 	},
 
@@ -139,9 +149,6 @@ export default {
 	// 		this.showDiscount = false;
 	// 	}, 2000);
 	// },	// 애로우 평션 쓰면 에러가 안난다는데 왤까?
-
-	
-
 
 	components: {
 		DiscountBanner,
@@ -173,13 +180,25 @@ div {
 	border-radius: 5px;
 }
 
-.fade-enter-from{transform: translateY(-1000px);}
-.fade-enter-active{transition: all 1s;}
-.fade-enter-to{transform: translateY(0)}
+.fade-enter-from {
+	transform: translateY(-1000px);
+}
+.fade-enter-active {
+	transition: all 1s;
+}
+.fade-enter-to {
+	transform: translateY(0);
+}
 
-.fade-leave-from{opacity: 1;}
-.fade-leave-active{transition: all 1s;}
-.fade-leave-to{opacity: 0;}
+.fade-leave-from {
+	opacity: 1;
+}
+.fade-leave-active {
+	transition: all 1s;
+}
+.fade-leave-to {
+	opacity: 0;
+}
 
 /* .start{
 	opacity: 0;

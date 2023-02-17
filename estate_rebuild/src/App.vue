@@ -75,7 +75,7 @@ export default {
 		sortUnderFifty() {
 			let underFifty = [];
 			for (let i = 0; i < this.onerooms.length; i++) {
-				if (this.onerooms[i].price < 500000) {
+				if (this.onerooms[i].prioce < 500000) {
 					underFifty.push(this.onerooms[i]);
 				}
 			}
