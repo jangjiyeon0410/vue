@@ -1,15 +1,21 @@
 <template>
 	<div class="header">
 		<ul class="header-button-left">
-			<li>Cancel</li>
+			<li @click="step = 0" v-if="step > 0">Cancel</li>
 		</ul>
 		<ul class="header-button-right">
-			<li>Next</li>
+			<li @click="next" v-if="step > 0">Next</li>
 		</ul>
 		<img src="./assets/logo.png" class="logo" />
 	</div>
 
-	<ContainerBox :postingData="postingData" />
+	<ContainerBox
+		:postingData="postingData"
+		:step="step"
+		:newImgUrl="newImgUrl"
+		:selectedFilter="selectedFilter"
+		@myContent="myContent = $event.target.value"
+	/>
 
 	<div class="footer">
 		<div class="footer-button-plus">
@@ -25,7 +31,7 @@
 		</div>
 	</div>
 
-	<button @click="morePost">더보기</button>
+	<button v-if="step == 0" @click="morePost">더보기</button>
 </template>
 
 <script>
@@ -39,9 +45,33 @@ export default {
 		return {
 			postingData: postingData,
 			clicked: 0,
+			step: 0,
+			newImgUrl: '',
+			selectedFilter: '',
+			myContent: '',
 		};
 	},
 	methods: {
+		next() {
+			if (this.step == 1) {
+				this.step++;
+			} else if (this.step == 2) {
+				const post = {
+					name: 'Kim Hyun',
+					userImage: 'https://placeimg.com/100/100/arch',
+					postImage: this.newImgUrl,
+					likes: 36,
+					date: 'May 15',
+					liked: false,
+					content: this.myContent,
+					filter: this.selectedFilter,
+				};
+				this.postingData.unshift(post);
+				console.log(this.postingData);
+
+				this.step = 0;
+			}
+		},
 		morePost() {
 			axios
 				.get(`https://codingapple1.github.io/vue/more${this.clicked}.json`)
@@ -54,7 +84,18 @@ export default {
 					console.log(Error);
 				});
 		},
-		upload() {},
+		upload(e) {
+			this.step = 1;
+			const file = e.target.files;
+
+			const objectURL = URL.createObjectURL(file[0]); //param에 들어갈 객체는 data 객체가 아닌 Blob, File, MediaSource 객체여야함
+			this.newImgUrl = objectURL;
+		},
+	},
+	mounted() {
+		this.emitter.on('selectedFilter', (data) => {
+			this.selectedFilter = data;
+		});
 	},
 	components: {
 		ContainerBox,

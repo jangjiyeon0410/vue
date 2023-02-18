@@ -34,7 +34,7 @@
 				:style="`background-image:url(${imageUrl})`"
 			></div>
 			<div class="write">
-				<textarea @input="$emit('postMyContent', $event)">write!</textarea>
+				<textarea @input="$emit('postMyContent', data)">write!</textarea>
 			</div>
 		</div>
 	</div>

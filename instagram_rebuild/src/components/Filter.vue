@@ -1,11 +1,35 @@
 <template>
-	<span>필터목록보여주기</span>
+	<div
+		:class="`filter-item ${filter}`"
+		:style="{ backgroundImage: `url(${newImgUrl})` }"
+		@click="fire"
+	></div>
 </template>
 
 <script>
 export default {
-	name: 'filterList',
+	name: 'filterItem',
+	props: {
+		newImgUrl: String,
+		filter: String,
+	},
+	methods: {
+		fire() {
+			this.emitter.emit('selectedFilter', this.filter);
+		},
+	},
 };
 </script>
 
-<style></style>
+<style>
+.filter-item {
+	width: 100px;
+	height: 100px;
+	margin: 10px 10px 10px auto;
+	padding: 8px;
+	display: inline-block;
+	color: white;
+	background-size: cover;
+	background-position: center;
+}
+</style>

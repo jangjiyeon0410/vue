@@ -8,7 +8,7 @@
 			<span class="profile-name">{{ postingData.name }}</span>
 		</div>
 		<div
-			class="post-body"
+			:class="`post-body ${postingData.filter}`"
 			:style="{ backgroundImage: `url(${postingData.postImage})` }"
 		></div>
 		<div class="post-content">
