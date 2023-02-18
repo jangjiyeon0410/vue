@@ -49,9 +49,9 @@
 	<!-- <p>{{ $store.state.more }}</p>
 	<button @click="$store.dispatch('getData')">더보기</button> -->
 
-	<p>{{ now2 }}{{ counter }}</p>
+	<!-- <p>{{ now2 }}{{ counter }}</p>
 	<p>{{ 작명 }}{{ name }}{{ age }}{{ likes }}</p>
-	<button @click="counter++">버튼</button>
+	<button @click="counter++">버튼</button> -->
 </template>
 
 <script>
