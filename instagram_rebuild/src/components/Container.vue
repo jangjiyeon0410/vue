@@ -16,9 +16,10 @@
 		<div class="filters">
 			<filterItem
 				v-for="filter in filterList"
+				:class="filter"
 				:key="filter"
 				:newImgUrl="newImgUrl"
-				:filter="filter"
+				@click="$emit('selectedFilter', filter)"
 			/>
 		</div>
 	</div>
@@ -76,12 +77,16 @@ export default {
 		};
 	},
 	props: {
-		postingData: Array,
+		// postingData: Array,
 		step: Number,
 		newImgUrl: String,
 		selectedFilter: String,
 	},
-
+	computed: {
+		postingData() {
+			return this.$store.state.postingData;
+		},
+	},
 	components: {
 		PostItems,
 		filterItem,

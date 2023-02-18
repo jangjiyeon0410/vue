@@ -10,11 +10,11 @@
 	</div>
 
 	<ContainerBox
-		:postingData="postingData"
 		:step="step"
 		:newImgUrl="newImgUrl"
 		:selectedFilter="selectedFilter"
 		@myContent="myContent = $event.target.value"
+		@selectedFilter="selectedFilter = $event"
 	/>
 
 	<div class="footer">
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import postingData from './assets/postingData';
+// import postingData from './assets/postingData';
 import ContainerBox from './components/Container.vue';
 import axios from 'axios';
 
@@ -43,7 +43,7 @@ export default {
 	name: 'App',
 	data() {
 		return {
-			postingData: postingData,
+			// postingData: postingData,
 			clicked: 0,
 			step: 0,
 			newImgUrl: '',
@@ -92,10 +92,15 @@ export default {
 			this.newImgUrl = objectURL;
 		},
 	},
-	mounted() {
-		this.emitter.on('selectedFilter', (data) => {
-			this.selectedFilter = data;
-		});
+	// mounted() {
+	// 	this.emitter.on('selectedFilter', (data) => {
+	// 		this.selectedFilter = data;
+	// 	});
+	// },
+	computed: {
+		postingData() {
+			return this.$store.state.postingData;
+		},
 	},
 	components: {
 		ContainerBox,
