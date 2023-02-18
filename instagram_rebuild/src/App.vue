@@ -44,7 +44,7 @@ export default {
 	data() {
 		return {
 			// postingData: postingData,
-			clicked: 0,
+			moreClicked: 0,
 			step: 0,
 			newImgUrl: '',
 			selectedFilter: '',
@@ -74,10 +74,10 @@ export default {
 		},
 		morePost() {
 			axios
-				.get(`https://codingapple1.github.io/vue/more${this.clicked}.json`)
+				.get(`https://codingapple1.github.io/vue/more${this.moreClicked}.json`)
 				.then((Response) => {
 					this.postingData.push(Response.data);
-					this.clicked++;
+					this.moreClicked++;
 					console.log(this.postingData);
 				})
 				.catch((Error) => {

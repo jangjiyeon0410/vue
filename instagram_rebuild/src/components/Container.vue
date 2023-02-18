@@ -4,6 +4,7 @@
 			v-for="(a, i) in postingData"
 			:key="a"
 			:postingData="postingData[i]"
+			@click="likes(a)"
 		/>
 	</div>
 
@@ -81,6 +82,17 @@ export default {
 		step: Number,
 		newImgUrl: String,
 		selectedFilter: String,
+	},
+	methods: {
+		likes(a) {
+			if (a.liked == false) {
+				a.likes++;
+				a.liked = true;
+			} else {
+				a.likes--;
+				a.liked = false;
+			}
+		},
 	},
 	computed: {
 		postingData() {
